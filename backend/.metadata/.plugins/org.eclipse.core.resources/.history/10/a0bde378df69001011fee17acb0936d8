@@ -1,0 +1,5 @@
+package com.example.chatbot.repository.controller;
+
+public class ProductController {
+
+}

@@ -1,0 +1,179 @@
+package com.example.chatbot.service;
+
+
+import com.example.chatbot.entity.*;
+import com.example.chatbot.repository.*;
+import com.opencsv.CSVReader;
+
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+@Service
+@RequiredArgsConstructor
+public class CSVLoader {
+
+    private final ProductRepository productRepo;
+    private final UserRepository userRepo;
+    private final OrderRepository orderRepo;
+    private final OrderItemRepository orderItemRepo;
+    private final InventoryItemRepository inventoryRepo;
+    private final DistributionCenterRepository dcRepo;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    @PostConstruct
+    public void init() throws Exception {
+        loadDistributionCenters();
+        loadProducts();
+        loadUsers();
+        loadOrders();
+        loadInventoryItems();
+        loadOrderItems();
+    }
+
+    private void loadDistributionCenters() throws Exception {
+        try (CSVReader reader = getReader("distribution_centers.csv")) {
+            String[] line;
+            reader.readNext(); // skip header
+            while ((line = reader.readNext()) != null) {
+                DistributionCenter dc = new DistributionCenter(
+                    Long.parseLong(line[0]),
+                    line[1],
+                    parseDouble(line[2]),
+                    parseDouble(line[3])
+                );
+                dcRepo.save(dc);
+            }
+        }
+    }
+
+    private void loadProducts() throws Exception {
+        try (CSVReader reader = getReader("products.csv")) {
+            String[] line;
+            reader.readNext();
+            while ((line = reader.readNext()) != null) {
+                Product p = new Product(
+                    Long.parseLong(line[0]),
+                    parseDouble(line[1]),
+                    line[2],
+                    line[3],
+                    line[4],
+                    parseDouble(line[5]),
+                    line[6],
+                    line[7],
+                    parseLong(line[8])
+                );
+                productRepo.save(p);
+            }
+        }
+    }
+
+    private void loadUsers() throws Exception {
+        try (CSVReader reader = getReader("users.csv")) {
+            String[] line;
+            reader.readNext();
+            while ((line = reader.readNext()) != null) {
+                User user = new User(
+                    Long.parseLong(line[0]),
+                    line[1], line[2], line[3],
+                    parseInt(line[4]), line[5], line[6],
+                    line[7], line[8], line[9], line[10],
+                    parseDouble(line[11]), parseDouble(line[12]),
+                    line[13], parseDate(line[14])
+                );
+                userRepo.save(user);
+            }
+        }
+    }
+
+    private void loadOrders() throws Exception {
+        try (CSVReader reader = getReader("orders.csv")) {
+            String[] line;
+            reader.readNext();
+            while ((line = reader.readNext()) != null) {
+                Order order = new Order(
+                    Long.parseLong(line[0]),
+                    Long.parseLong(line[1]),
+                    line[2],
+                    line[3],
+                    parseDate(line[4]),
+                    parseDate(line[5]),
+                    parseDate(line[6]),
+                    parseDate(line[7]),
+                    parseInt(line[8])
+                );
+                orderRepo.save(order);
+            }
+        }
+    }
+
+    private void loadInventoryItems() throws Exception {
+        try (CSVReader reader = getReader("inventory_items.csv")) {
+            String[] line;
+            reader.readNext();
+            while ((line = reader.readNext()) != null) {
+                InventoryItem item = new InventoryItem(
+                    Long.parseLong(line[0]),
+                    Long.parseLong(line[1]),
+                    parseDate(line[2]),
+                    parseDate(line[3]),
+                    parseDouble(line[4]),
+                    line[5], line[6], line[7],
+                    parseDouble(line[8]),
+                    line[9], line[10],
+                    parseLong(line[11])
+                );
+                inventoryRepo.save(item);
+            }
+        }
+    }
+
+    private void loadOrderItems() throws Exception {
+        try (CSVReader reader = getReader("order_items.csv")) {
+            String[] line;
+            reader.readNext();
+            while ((line = reader.readNext()) != null) {
+                OrderItem item = new OrderItem(
+                    Long.parseLong(line[0]),
+                    Long.parseLong(line[1]),
+                    Long.parseLong(line[2]),
+                    Long.parseLong(line[3]),
+                    Long.parseLong(line[4]),
+                    line[5],
+                    parseDate(line[6]),
+                    parseDate(line[7]),
+                    parseDate(line[8]),
+                    parseDate(line[9])
+                );
+                orderItemRepo.save(item);
+            }
+        }
+    }
+
+    private CSVReader getReader(String filename) throws IOException {
+        InputStream is = new ClassPathResource("data/" + filename).getInputStream();
+        return new CSVReader(new InputStreamReader(is));
+    }
+
+    private LocalDateTime parseDate(String input) {
+        return (input == null || input.isEmpty()) ? null : LocalDateTime.parse(input, formatter);
+    }
+
+    private Double parseDouble(String input) {
+        return (input == null || input.isEmpty()) ? null : Double.parseDouble(input);
+    }
+
+    private Long parseLong(String input) {
+        return (input == null || input.isEmpty()) ? null : Long.parseLong(input);
+    }
+
+    private Integer parseInt(String input) {
+        return (input == null || input.isEmpty()) ? null : Integer.parseInt(input);
+    }
+}
