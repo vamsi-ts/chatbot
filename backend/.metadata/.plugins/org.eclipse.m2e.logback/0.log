@@ -598,3 +598,15 @@
 2025-07-26 11:07:32,695 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2025-07-26 11:07:32,705 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2025-07-26 11:07:32,712 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\vamsi\OneDrive\Desktop\Chatbot\chatbot-1\src\test\resources
+2025-07-26 11:20:03,538 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-07-26 11:22:03,433 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-07-26 11:22:03,496 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-07-26 11:22:03,506 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\vamsi\OneDrive\Desktop\chatbot\backend\chatbot-1\src\test\resources
+2025-07-26 11:22:22,939 [Start Help Server] INFO  org.eclipse.jetty.server.Server - jetty-12.0.21; built: 2025-05-09T00:32:00.688Z; git: 1c4719601e31b05b7d68910d2edd980259f1f53c; jvm 21.0.7+6-LTS
+2025-07-26 11:22:23,074 [Start Help Server] INFO  o.e.j.server.handler.ContextHandler - Started oeje8n.ContextHandler$CoreContextHandler@61c9fc64{/help,/help,b=null,a=AVAILABLE,h=oeje8n.ContextHandler$CoreContextHandler$CoreToNestedHandler@237188d8{STARTED}}
+2025-07-26 11:22:23,076 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
+2025-07-26 11:22:23,156 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@47f8271c{HTTP/1.1, (http/1.1)}{127.0.0.1:55286}
+2025-07-26 11:22:23,202 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@372ad4cb{STARTING}[12.0.21,sto=0] @165652ms
+2025-07-26 11:23:37,940 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-07-26 11:23:37,952 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-07-26 11:23:37,960 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\vamsi\OneDrive\Desktop\chatbot\backend\chatbot-1\src\test\resources
