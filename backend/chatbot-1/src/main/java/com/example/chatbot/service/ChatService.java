@@ -11,7 +11,6 @@ import com.example.chatbot.repository.ConversationRepository;
 import com.example.chatbot.repository.MessageRepository;
 
 import lombok.RequiredArgsConstructor;
-
 @Service
 @RequiredArgsConstructor
 public class ChatService {
@@ -19,6 +18,7 @@ public class ChatService {
     private final UserRepository userRepo;
     private final ConversationRepository conversationRepo;
     private final MessageRepository messageRepo;
+    private final LLMService llmService;
 
     public ChatResponse handleChat(ChatRequest request) {
         User user = userRepo.findById(request.getUserId()).orElseThrow();
@@ -34,22 +34,20 @@ public class ChatService {
 
         // Save user message
         Message userMessage = new Message();
-        userMessage.setSender("user");
         userMessage.setContent(request.getMessage());
         userMessage.setConversation(conversation);
         messageRepo.save(userMessage);
 
-        // Generate AI response (mock or call model)
-        String aiReply = "This is a mock AI response to: " + request.getMessage();
+        // Use LLM to generate a response
+        String aiReply = llmService.getLLMResponse(request.getMessage());
 
         // Save AI message
         Message aiMessage = new Message();
-        aiMessage.setSender("ai");
         aiMessage.setContent(aiReply);
         aiMessage.setConversation(conversation);
+        messageRepo.save(userMessage);
         messageRepo.save(aiMessage);
 
         return new ChatResponse(conversation.getId(), userMessage.getContent(), aiMessage.getContent());
     }
 }
-
